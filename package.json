@@ -1,5 +1,5 @@
 {
-  "name": "Quick Tab",
+  "name": "Quick-Tab",
   "version": "5.0.0",
   "description": "A tab management Chrome Extension.",
   "main": "index.js",
@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tomlerendu/Quick-Tab/issues"
   },
-  "homepage": "https://tomlerendu.uk/portfolio/quick-tab"
+  "homepage": "https://tomlerendu.uk/portfolio/quick-tab",
+  "devDependencies": {
+    "webpack": "^2.2.1"
+  }
 }
