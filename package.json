@@ -1,0 +1,20 @@
+{
+  "name": "Quick Tab",
+  "version": "5.0.0",
+  "description": "A tab management Chrome Extension.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomlerendu/Quick-Tab.git"
+  },
+  "keywords": [],
+  "author": "Tom Lerendu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomlerendu/Quick-Tab/issues"
+  },
+  "homepage": "https://tomlerendu.uk/portfolio/quick-tab"
+}
