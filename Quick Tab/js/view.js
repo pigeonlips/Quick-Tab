@@ -133,6 +133,13 @@ Manager.prototype.switchToSelectedTab = function()
     this.tabArray[this.selectedTab].switchTo();
 };
 
+Manager.prototype.closeSelectedTab = function()
+{
+    this.tabArray[this.selectedTab].close();
+    this.searchInputReference.focus();
+    //this.selectedTab = -1;
+};
+
 Manager.prototype.selectFirstTab = function()
 {
     for(var i=0; i<this.tabArray.length; i++) {
@@ -168,6 +175,10 @@ window.onload = function()
                 break;
             case 13:
                 tabManager.switchToSelectedTab();
+                break;
+            case 46:
+                tabManager.closeSelectedTab();
+                e.preventDefault();
                 break;
             case 27:
                 window.close();
