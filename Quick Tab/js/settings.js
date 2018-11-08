@@ -13,9 +13,14 @@ window.onload = function() {
         localStorage['popup.width'] = e.target.value;
     });
 
+    document.querySelector('#accentColor').addEventListener('change', function(e) {
+        localStorage['display.accentColor'] = e.target.value;
+    });
+
     var settings = new Settings();
     settings.displayKeyboardShortcut();
     settings.setupWidthSlider();
+    settings.setupAccentColor();
 };
 
 function Settings()

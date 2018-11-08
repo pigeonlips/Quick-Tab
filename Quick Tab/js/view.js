@@ -22,7 +22,7 @@ function Manager()
             e.preventDefault();
         }
     }.bind(this));
-    
+
     //User pressed a key in the search box
     this.search.searchInputReference.addEventListener('keyup', function(e) {
         if(this.search.isValidSearchChar(e)) {
@@ -35,7 +35,7 @@ function Manager()
         this.search.clear(this.tabArray);
     }.bind(this));
 }
-	
+
 Manager.prototype.generateList = function()
 {
 	var tabArray = [];
@@ -191,6 +191,20 @@ window.onload = function()
         document.body.style.width = '400px';
     } else {
         document.body.style.width = localStorage['popup.width'] * 200 + 'px';
+    }
+
+
+
+    if (typeof ['display.accentColor'] == 'undefined') {
+
+        // if color option is not set then use a blue by default 
+        document.documentElement.style.setProperty('--accent-color', "#1565C0");
+
+    } else {
+
+        // if user has set a color to use, override the css var
+        document.documentElement.style.setProperty('--accent-color', localStorage['display.accentColor']);
+
     }
 
 	var tabManager = new Manager();
