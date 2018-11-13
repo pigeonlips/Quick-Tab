@@ -1,38 +1,23 @@
-window.onload = function() {
-
-    //Clicking the "Configure shortcut" button
-    document.querySelector('#shortcutLink').addEventListener('click', function() {
-        settings.openLink('chrome://extensions/configureCommands');
-    });
-
-    document.querySelector('#githubLink').addEventListener('click', function() {
-        settings.openLink('https://github.com/tomlerendu/Quick-Tab/issues/new');
-    });
-
-    document.querySelector('.popupWidth').addEventListener('change', function(e) {
-        localStorage['popup.width'] = e.target.value;
-    });
-
-    document.querySelector('#accentColor').addEventListener('change', function(e) {
-        localStorage['display.accentColor'] = e.target.value;
-    });
-
-    document.querySelector('#displayTabsFromAllWindows').addEventListener('change', function(e) {
-        localStorage['display.tabs.from.all.windows'] = e.target.checked;
-    });
-
-    var settings = new Settings();
-    settings.displayKeyboardShortcut();
-    settings.setupWidthSlider();
-    settings.setupAccentColor();
-    settings.setupDisplayTabsFromAllWindows();
-
-};
-
 function Settings()
 {
-    setInterval(this.displayKeyboardShortcut, 1000);
+    //setInterval(this.displayKeyboardShortcut, 1000);
+    this.reference = document.querySelector('#settings');
+    this.buttonReference = document.querySelector('#optionsButton');
 }
+
+Settings.prototype.show = function()
+{
+        this.reference.classList.remove('hidden');
+        this.buttonReference.addEventListener('click', function(event) {
+            this.hide();
+        }.bind(this));
+};
+
+Settings.prototype.hide = function()
+{
+    this.reference.classList.add('hidden');
+    window.location.reload(true);
+};
 
 Settings.prototype.setupWidthSlider = function()
 {
@@ -66,6 +51,16 @@ Settings.prototype.displayKeyboardShortcut = function()
     }.bind(this));
 };
 
+Settings.prototype.setupAccentColor = function()
+{
+    var selected = localStorage['display.accentColor'];
+    console.log('my color is [' + selected + '] !');
+    if (typeof localStorage['display.accentColor'] == 'undefined') {
+        document.querySelector('#accentColor').value = "#1565C0";
+    } else {
+        document.querySelector('#accentColor').value = localStorage['display.accentColor'];
+    }
+};
 
 Settings.prototype.openLink = function(link)
 {

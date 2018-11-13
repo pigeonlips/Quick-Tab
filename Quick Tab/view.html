@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-		<link href="css/view.css" rel="stylesheet">
-		<script type="text/javascript" src="js/view.js"></script>
-        <script type="text/javascript" src="js/tab.js"></script>
-        <script type="text/javascript" src="js/help.js"></script>
-        <script type="text/javascript" src="js/search.js"></script>
-	</head>
-	<body>
-		<div>
-			<div id="searchClear" class="hidden"></div>
-			<input type="text" id="searchInput" autofocus="true" placeholder="Search Tabs"/>
-		</div>
-		<div class="divider"></div>
-		<div id="help" class="hidden">
-			<p>Welcome to Quick Tab!</p>
-			<ul>
-                <li>Use Alt+T to open this window quickly</li>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="css/view.css" rel="stylesheet">
+    <script type="text/javascript" src="js/view.js"></script>
+    <script type="text/javascript" src="js/tab.js"></script>
+    <script type="text/javascript" src="js/help.js"></script>
+    <script type="text/javascript" src="js/search.js"></script>
+    <script type="text/javascript" src="js/settings.js"></script>
+  </head>
+  <body>
+    <div>
 
-                <li>Use the up, down and enter keys to select and switch to a tab</li>
-                <li>Right click, or use Del on a tab to close it</li>
-			</ul>
-			<button id="helpButton">Ok, got it</button>
-		</div>
-		<div id="tabs"></div>
-		<div id="noTabs" class="hidden">
-			<div id="sadFace">:(</div>
-			<p>No tabs found</p>
-		</div>
-	</body>
+      <input type="text" id="searchInput" autofocus="true" placeholder="Search Tabs"/>
+      <div id="searchClear" class="hidden"></div>
+    </div>
+    <div class="divider"></div>
+    <div id="help" class="hidden">
+      <p>Welcome to Quick Tab!</p>
+      <ul>
+                <li>Use [Alt]+[T] to open this window quickly</li>
+                <li>Use the [Up], [Down] and [Enter] keys to select and switch to a tab</li>
+                <li>Right click, or use [Delete] on a tab to close it</li>
+                <li>Type "help" to show this help message</li>
+                <li>Type "options" to configure the extenstion</li>
+      </ul>
+      <button id="helpButton">Ok, got it</button>
+    </div>
+    <div id="settings" class="hidden">
+      <div class="option">
+          <h2>Size</h2>
+          <input type="range" class="popupWidth" min="1" max="4" step="1">
+          <div class="sizes">
+              <div class="small">Small</div>
+              <div class="medium">Medium</div>
+              <div class="large">Large</div>
+              <div class="gigantic">Gigantic</div>
+          </div>
+      </div>
+      <div class="option">
+          <h2>Shortcut</h2>
+          Open Quick Tab using <b id="keyboardShortcut"></b> - <a href="#" id="shortcutLink">Configure</a>
+      </div>
+      <div class="option">
+          <h2>color</h2>
+          <input type="Color" id="accentColor" value="#000000">Accent color to use
+          <h2>All Tabs</h2>
+          <input type="checkbox" id="displayTabsFromAllWindows">Display Tabs from all windows
+      </div>
+      <div class="option">
+          <h2>Website</h2>
+          To suggest features please visit the <a href="#" id="githubLink">Github</a> page.
+      </div>
+      <button id="optionsButton">Done</button>
+    </div>
+    <div id="tabs"></div>
+    <div id="noTabs" class="hidden">
+      <div id="sadFace">:(</div>
+      <p>No tabs found</p>
+    </div>
+  </body>
 </html>

@@ -54,6 +54,8 @@ Search.prototype.query = function(term, tabArray)
         this.noTabsReference.classList.add('hidden');
         this.delegate.selectFirstTab();
     }
+
+
 };
 
 Search.prototype.searchInputKeyup = function(e, tabArray)

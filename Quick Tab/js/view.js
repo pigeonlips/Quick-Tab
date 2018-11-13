@@ -1,6 +1,7 @@
 function Manager()
 {
     this.help = new Help();
+    this.settings = new Settings();
     this.search = new Search(this);
 
     this.tabReference = document.querySelector('#tabs');
@@ -16,8 +17,8 @@ function Manager()
         keyCode = e.keyCode;
 
         if(
-            keyCode == 38 ||					   //Up
-            keyCode == 40   					   //Down
+            keyCode == 38 ||             //Up
+            keyCode == 40                //Down
         ){
             e.preventDefault();
         }
@@ -36,25 +37,36 @@ function Manager()
     }.bind(this));
 }
 
+Manager.prototype.showHelp = function()
+{
+   this.help.show();
+};
+
+Manager.prototype.showSettings = function()
+{
+   this.settings.show();
+};
+
 Manager.prototype.generateList = function()
 {
-	var tabArray = [];
-	var query = {};
-    if (localStorage['display.tabs.from.all.windows'] === 'false') {
-        query.currentWindow = true;
-    }
-	chrome.tabs.query(query, function(tabs) {
-		for(var i=0; i<tabs.length; i++) {
-            //Create an object for each tab
-            var tab = new Tab(tabs[i].id, tabs[i].windowId, tabs[i].title, tabs[i].url, tabs[i].favIconUrl, this);
-			//Add the object to the tab array
-			tabArray.push(tab);
-			//Add to the tabs view
-			this.tabReference.appendChild(tab.view);
-		}
-    }.bind(this));
+  var tabArray = [];
+  var query = {};
+  if (localStorage['display.tabs.from.all.windows'] === 'false') {
+    query.currentWindow = true;
+  }
 
-	return tabArray;
+  chrome.tabs.query({}, function(tabs) {
+    for(var i=0; i<tabs.length; i++) {
+      //Create an object for each tab
+      var tab = new Tab(tabs[i].id, tabs[i].windowId, tabs[i].title, tabs[i].url, tabs[i].favIconUrl, this);
+      //Add the object to the tab array
+      tabArray.push(tab);
+      //Add to the tabs view
+      this.tabReference.appendChild(tab.view);
+    }
+  }.bind(this));
+
+  return tabArray;
 };
 
 Manager.prototype.setSelectedTab = function(tabId)
@@ -161,7 +173,7 @@ window.onload = function()
         tabManager.tabLock = false;
     };
 
-	document.oncontextmenu = function(e) {
+  document.oncontextmenu = function(e) {
         e.preventDefault();
     };
 
@@ -178,6 +190,16 @@ window.onload = function()
                 e.preventDefault();
                 break;
             case 13:
+                if (document.querySelector('#searchInput').value == "help") {
+                  localStorage.removeItem('help');
+                  tabManager.showHelp();
+                  break;
+                }
+                if (document.querySelector('#searchInput').value == "options") {
+                  tabManager.showSettings();
+                  break;
+                }
+                // if not switch to selected tab
                 tabManager.switchToSelectedTab();
                 break;
             case 46:
@@ -187,6 +209,12 @@ window.onload = function()
             case 27:
                 window.close();
                 break;
+            case 191:
+              if (e.shiftKey) {
+                localStorage.removeItem('help');
+                tabManager.showHelp();
+              }
+              break;
         }
 
     };
@@ -197,11 +225,9 @@ window.onload = function()
         document.body.style.width = localStorage['popup.width'] * 200 + 'px';
     }
 
-
-
     if (typeof ['display.accentColor'] == 'undefined') {
 
-        // if color option is not set then use a blue by default 
+        // if color option is not set then use a blue by default
         document.documentElement.style.setProperty('--accent-color', "#1565C0");
 
     } else {
@@ -211,5 +237,36 @@ window.onload = function()
 
     }
 
-	var tabManager = new Manager();
+  var tabManager = new Manager();
+
+
+    //Clicking the "Configure shortcut" button
+    document.querySelector('#shortcutLink').addEventListener('click', function() {
+        settings.openLink('chrome://extensions/configureCommands');
+    });
+
+    document.querySelector('#githubLink').addEventListener('click', function() {
+        settings.openLink('https://github.com/tomlerendu/Quick-Tab/issues/new');
+    });
+
+    document.querySelector('.popupWidth').addEventListener('change', function(e) {
+        localStorage['popup.width'] = e.target.value;
+    });
+
+    document.querySelector('#accentColor').addEventListener('change', function(e) {
+        localStorage['display.accentColor'] = e.target.value;
+    });
+
+    document.querySelector('#displayTabsFromAllWindows').addEventListener('change', function(e) {
+        localStorage['display.tabs.from.all.windows'] = e.target.checked;
+    });
+
+    var settings = new Settings();
+    settings.setupWidthSlider();
+    settings.setupAccentColor();
+    settings.setupDisplayTabsFromAllWindows();
+
+    // moving this to the bottom as vivaldi fails with 'Uncaught TypeError: Cannot read property 'getAll' of undefined' casuing the rest of the code not to take effect
+    settings.displayKeyboardShortcut();
+
 };
