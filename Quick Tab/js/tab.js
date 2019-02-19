@@ -82,7 +82,7 @@ Tab.prototype.close = function()
 	if(index > -1){
 		array.splice(index, 1);
 	}
-	
+
     this.view.parentNode.removeChild(this.view);
     chrome.tabs.remove(this.id);
 };
